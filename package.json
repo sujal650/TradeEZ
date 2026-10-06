@@ -1,0 +1,14 @@
+{
+  "name": "stockez-trading-platform",
+  "version": "1.0.0",
+  "description": "StockEZ - MERN Full-Stack Real-Time Stock Trading & Portfolio Management System",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "seed": "cd backend && npm run seed"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.4"
+  }
+}
