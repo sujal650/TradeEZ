@@ -1,14 +1,24 @@
 const mongoose = require('mongoose');
+const dns = require('dns');
 
 let isConnected = false;
 
 const connectDB = async () => {
   const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/stockez';
 
+  // If using MongoDB Atlas SRV URI, ensure reliable DNS resolution
+  if (uri.startsWith('mongodb+srv://')) {
+    try {
+      dns.setServers(['8.8.8.8', '1.1.1.1', '8.8.4.4']);
+    } catch (dnsErr) {
+      console.warn('[Database] Could not set custom DNS servers:', dnsErr.message);
+    }
+  }
+
   try {
     const conn = await mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 3000,
-      connectTimeoutMS: 3000
+      serverSelectionTimeoutMS: 15000,
+      connectTimeoutMS: 15000
     });
     isConnected = true;
     console.log(`✅ [Database] MongoDB Connected successfully to: ${conn.connection.host}/${conn.connection.name}`);
